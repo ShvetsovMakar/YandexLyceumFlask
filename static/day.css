@@ -13,3 +13,45 @@ p {
   text-align: center;
   font-size: 25px;
 }
+
+
+.button {
+  margin: auto;
+  display: block;
+}
+
+.signup-button {
+  background-color: #008000;
+  color: green;
+
+  border-radius: 15px;
+  margin: auto;
+  display: block;
+  width: 100px;
+
+  text-align: center;
+  color: #FFFFFF;
+  font-size: 25px;
+}
+
+.signup-button:hover {
+  background-color: #228B22;
+}
+
+.login-button {
+  background-color: #535b69;
+  color: green;
+
+  border-radius: 15px;
+  margin: auto;
+  display: block;
+  width: 100px;
+
+  text-align: center;
+  color: #FFFFFF;
+  font-size: 25px;
+}
+
+.login-button:hover {
+  background-color: #677385;
+}

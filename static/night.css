@@ -1,5 +1,6 @@
 body {
   background-color: #14191c;
+  align-items: center;
 }
 
 h1 {
@@ -12,4 +13,45 @@ p {
   color: #D1D0D0;
   text-align: center;
   font-size: 25px;
+}
+
+.button {
+  margin: auto;
+  display: block;
+}
+
+.signup-button {
+  background-color: #008000;
+  color: green;
+
+  border-radius: 15px;
+  margin: auto;
+  display: block;
+  width: 100px;
+
+  text-align: center;
+  color: #FFFFFF;
+  font-size: 25px;
+}
+
+.signup-button:hover {
+  background-color: #228B22;
+}
+
+.login-button {
+  background-color: #090b12;
+  color: green;
+
+  border-radius: 15px;
+  margin: auto;
+  display: block;
+  width: 100px;
+
+  text-align: center;
+  color: #707070;
+  font-size: 25px;
+}
+
+.login-button:hover {
+  background-color: #0c0f1a;
 }
