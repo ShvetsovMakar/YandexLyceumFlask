@@ -55,3 +55,48 @@ p {
 .login-button:hover {
   background-color: #677385;
 }
+
+form {
+  border-radius: 20px;
+  margin: auto;
+  display: block;
+  width: 700px;
+  height: 500px;
+
+  text-align: center;
+  color: black;
+  font-size: 25px;
+}
+
+.Confirmation {
+  background-color: white;
+  color: black;
+  border: 5px solid #04AA6D;
+  padding: 15px 100px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.Confirmation {
+  transition-duration: 0.3s;
+}
+
+.Confirmation:hover {
+  background-color: #04AA6D;
+  color: white;
+}
+
+.form-input {
+  text-color: black
+  border-radius: 10px;
+  margin: auto;
+  display: block;
+  width: 200px;
+
+
+  text-align: center;
+  color: #000000;
+  font-size: 25px;
+}

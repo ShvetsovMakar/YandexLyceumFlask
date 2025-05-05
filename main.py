@@ -8,6 +8,7 @@ app = Flask(__name__)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+
 @login_manager.user_loader
 def load_user(name):
     return User(name)
@@ -21,6 +22,7 @@ def index():
 
     return render_template("index.html", mode="night")
 
+
 @app.route("/signup")
 def signup():
     if current_user.is_authenticated:
@@ -28,12 +30,13 @@ def signup():
 
     return render_template("signup.html", mode="night")
 
+
+@app.route("/login")
 def login():
     if current_user.is_authenticated:
         pass
 
     return render_template("login.html", mode="night")
-
 
 
 if __name__ == "__main__":
