@@ -21,6 +21,20 @@ def index():
 
     return render_template("index.html", mode="night")
 
+@app.route("/signup")
+def signup():
+    if current_user.is_authenticated:
+        pass
+
+    return render_template("signup.html", mode="night")
+
+def login():
+    if current_user.is_authenticated:
+        pass
+
+    return render_template("login.html", mode="night")
+
+
 
 if __name__ == "__main__":
     app.run()

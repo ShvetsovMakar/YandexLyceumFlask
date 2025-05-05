@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Storybook</title>
+    {% if mode == "day" %}
+        <link rel="stylesheet" href="static/day.css" >
+    {% elif mode == "night" %}
+        <link rel="stylesheet" href="static/night.css" >
+    {% endif %}
+</head>
+
+<body>
+    <div>
+        <h1>
+            Storybook
+        </h1>
+        <p>
+            Social network
+        </p>
+
+    </div>
+
+    <div>
+        <a class="signup-button" href="/signup">Sign Up</a>
+        <br/>
+        <a class="login-button" href="/login">Log In</a>
+    </div>
+</body>
+
+</html>

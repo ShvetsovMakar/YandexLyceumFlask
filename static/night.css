@@ -14,6 +14,20 @@ p {
   text-align: center;
   font-size: 25px;
 }
+pre1{
+  color: #D1D0D0;
+  text-align: left;
+  font-size: 30px;
+}
+p2{
+  color: #D1D0D0;
+  text-align: center;
+  font-size: 30px;
+}
+p3{  color: #D1D0D0;
+  text-align: center;
+  font-size: 30px;
+ }
 
 .button {
   margin: auto;
@@ -55,3 +69,73 @@ p {
 .login-button:hover {
   background-color: #0c0f1a;
 }
+form {
+  border-radius: 20px;
+  margin: auto;
+  display: block;
+  width: 700px;
+  height: 500px;
+
+  text-align: center;
+  color: #707070;
+  font-size: 25px;
+}
+.Conf_btn {
+  background-color: #707070;
+  color: blue;
+
+  border-radius: 10px;
+  margin: auto;
+  display: block;
+  width: 200px;
+
+
+  text-align: center;
+  color: #ffffff;
+  font-size: 25px;
+}
+
+.Conf_btn:hover {
+  background-color: #0c0f1a;
+}
+.login_text {
+  text-color: black
+  border-radius: 10px;
+  margin: auto;
+  display: block;
+  width: 200px;
+
+
+  text-align: center;
+  color: #000000;
+  font-size: 25px;
+}
+.password_text {
+  text-color: black
+  border-radius: 10px;
+  margin: auto;
+  display: block;
+  width: 200px;
+
+
+  text-align: center;
+  color: #000000;
+  font-size: 25px;
+}
+.password_text1 {
+  text-color: black
+  border-radius: 10px;
+  margin: auto;
+  display: block;
+  width: 200px;
+
+
+  text-align: center;
+  color: #000000;
+  font-size: 25px;
+}
+
+
+
+
+
