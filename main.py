@@ -111,6 +111,14 @@ def add_post():
 
     return render_template("add_post.html", mode=mode)
 
+@app.route("/profile_form")
+def profile_form():
+    mode = "day"
+    if current_user.is_authenticated:
+        cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
+        mode = cur.fetchone()[0]
+
+    return render_template("profile_form.html", mode=mode)
 
 if __name__ == "__main__":
     app.run()
