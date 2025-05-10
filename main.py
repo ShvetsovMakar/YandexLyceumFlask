@@ -39,7 +39,7 @@ def index():
     return render_template("index.html", mode=mode)
 
 
-@app.route("/signup", methods=['GET', 'POST'])
+@app.route("/sign_up", methods=['GET', 'POST'])
 def signup():
     mode = "day"
     if current_user.is_authenticated:
@@ -52,11 +52,11 @@ def signup():
         confirmation = request.form['confirmation']
 
         if password != confirmation:
-            return redirect("/signup")  # password and confirmation do not match
+            return redirect("/sign_up")  # password and confirmation do not match
 
         usernames = fetch_usernames()
         if username.lower() in usernames:
-            return redirect("/signup")  # username already exists
+            return redirect("/sign_up")  # username already exists
 
         # Adding user to the database
         cur.execute(f'SELECT MAX(id) FROM users')
@@ -68,7 +68,7 @@ def signup():
 
         return redirect("/")
 
-    return render_template("signup.html", mode=mode)
+    return render_template("sign_up.html", mode=mode)
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -110,5 +110,7 @@ def add_post():
         mode = cur.fetchone()[0]
 
     return render_template("add_post.html", mode=mode)
+
+
 if __name__ == "__main__":
     app.run()

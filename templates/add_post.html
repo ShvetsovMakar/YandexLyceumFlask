@@ -1,155 +1,36 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Создать новый пост</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-            color: #333;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 30px auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 30px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        input[type="text"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-
-        textarea {
-            min-height: 200px;
-            resize: vertical;
-        }
-
-        .btn {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #2980b9;
-        }
-
-        .form-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 30px;
-        }
-
-        .error {
-            color: #e74c3c;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-    </style>
+    <title>Create Post</title>
+    {% if mode == "day" %}
+        <link rel="stylesheet" href="static/css/day.css">
+    {% elif mode == "night" %}
+        <link rel="stylesheet" href="static/css/night.css">
+    {% endif %}
 </head>
+
 <body>
-    <div class="container">
-        <h1>Создать новый пост</h1>
+    <div>
+        <h1>Create a Post</h1>
+        <form action="" method="post">
+            <label for="html">Title</label><br>
+            <input type="text" name="title" id="title" class="form-input" required><br>
 
-        <form action="/posts/create" method="POST" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="title">Заголовок</label>
-                <input type="text" id="title" name="title" required placeholder="Введите заголовок поста">
-                <div class="error" id="title-error"></div>
-            </div>
+            <label for="html">Content</label><br>
+            <textarea name="content" id="content" class="form-input" rows="5" cols="30" required></textarea><br>
 
-            <div class="form-group">
-                <label for="content">Содержание</label>
-                <textarea id="content" name="content" required placeholder="Напишите содержание поста..."></textarea>
-                <div class="error" id="content-error"></div>
-            </div>
+            <label for="html">Category</label><br>
+            <select name="category" id="category" class="form-input" required>
+                <option value="general">General</option>
+                <option value="news">News</option>
+                <option value="entertainment">Entertainment</option>
+                <option value="tech">Technology</option>
+                <option value="sports">Sports</option>
+            </select><br><br>
 
-            <div class="form-group">
-                <label for="category">Категория</label>
-                <select id="category" name="category">
-                    <option value="">Выберите категорию</option>
-                    <option value="technology">Технологии</option>
-                    <option value="science">Наука</option>
-                    <option value="art">Искусство</option>
-                    <option value="business">Бизнес</option>
-                    <option value="other">Другое</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="image">Изображение (опционально)</label>
-                <input type="file" id="image" name="image" accept="image/*">
-            </div>
-
-            <div class="form-footer">
-                <button type="submit" class="btn">Опубликовать</button>
-                <a href="#" style="color: #7f8c8d;">Отмена</a>
-            </div>
+            <button type="submit" id="submit" class="Confirmation">Post</button>
         </form>
     </div>
-
-    <script>
-        // Простая валидация формы
-        document.querySelector('form').addEventListener('submit', function(e) {
-            let valid = true;
-            const title = document.getElementById('title').value.trim();
-            const content = document.getElementById('content').value.trim();
-
-            if (title.length < 5) {
-                document.getElementById('title-error').textContent = 'Заголовок должен содержать минимум 5 символов';
-                valid = false;
-            } else {
-                document.getElementById('title-error').textContent = '';
-            }
-
-            if (content.length < 20) {
-                document.getElementById('content-error').textContent = 'Содержание должно содержать минимум 20 символов';
-                valid = false;
-            } else {
-                document.getElementById('content-error').textContent = '';
-            }
-
-            if (!valid) {
-                e.preventDefault();
-            }
-        });
-    </script>
 </body>
 </html>
