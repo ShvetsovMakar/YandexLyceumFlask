@@ -49,10 +49,7 @@ def load_user(name):
 def index():
     mode = "day"
     if current_user.is_authenticated:
-        cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
-        mode = cur.fetchone()[0]
-
-        return redirect("/feed", mode=mode)
+        return redirect("/feed")
 
     return render_template("index.html", mode=mode)
 
@@ -61,10 +58,7 @@ def index():
 def signup():
     mode = "day"
     if current_user.is_authenticated:
-        cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
-        mode = cur.fetchone()[0]
-
-        return redirect("/feed", mode=mode)
+        return redirect("/feed")
 
     if request.method == 'POST':
         username = request.form['username']
@@ -95,10 +89,7 @@ def signup():
 def login():
     mode = "day"
     if current_user.is_authenticated:
-        cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
-        mode = cur.fetchone()[0]
-
-        return redirect("/feed", mode=mode)
+        return redirect("/feed")
 
     if request.method == 'POST':
         username = request.form['username']
@@ -227,7 +218,7 @@ def user_info(username):
     birth_date = info[2]
     about = info[3]
 
-    return render_template("user_info.html", mode=mode, usename=username, name=name, surname=surname,
+    return render_template("user_info.html", mode=mode, username=username, name=name, surname=surname,
                            birth_date=birth_date, about=about)
 
 
