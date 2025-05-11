@@ -161,7 +161,6 @@ def edit_profile():
 
 
 @app.route("/feed", methods=['GET', 'POST'])
-@login_required
 def feed():
     mode = "day"
     if current_user.is_authenticated:
