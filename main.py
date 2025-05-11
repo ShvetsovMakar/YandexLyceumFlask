@@ -8,13 +8,13 @@ from database.config import cur, db
 
 # Модель данных поста (в реальном приложении это будет из БД)
 class Post:
-    def __init__(self, id, title, content, category, creation_date, author_id):
+    def __init__(self, id, title, content, category, creation_date, author):
         self.id = id
         self.title = title
         self.content = content
         self.category = category
         self.creation_date = creation_date
-        self.author_id = author_id
+        self.author = author
 
 # Functions
 def fetch_usernames():
@@ -47,6 +47,7 @@ def index():
     if current_user.is_authenticated:
         cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
         mode = cur.fetchone()[0]
+
 
     return render_template("index.html", mode=mode)
 
@@ -181,9 +182,10 @@ def logout():
 
 @app.route("/feed", methods=['GET', 'POST'])
 def feed():
+    mode='day'
     if current_user.is_authenticated:
         cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
-        mode=cur.fetchone()[0],
+        mode = cur.fetchone()[0],
     res = cur.execute("""Select * from posts""").fetchall()
     posts = []
     for i in range(len(res)):
@@ -192,8 +194,8 @@ def feed():
             title = res[i][1],
             content = res[i][2],
             category = res[i][3],
-            creation_date = datetime.now(),
-            author_id = cur.execute(f"Select username from users Where id = ({res[i][5]})").fetchall()[0][0]
+            creation_date = res[i][4],
+            author = cur.execute(f"Select username from users Where id = ({res[i][5]})").fetchall()[0][0]
 
         ))
     return render_template(
