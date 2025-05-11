@@ -171,16 +171,6 @@ def edit_profile():
     return render_template("edit_profile.html", mode=mode)
 
 
-@app.route("/feed", methods=['GET', 'POST'])
-def feed():
-    mode = "day"
-    if current_user.is_authenticated:
-        cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
-        mode = cur.fetchone()[0]
-
-    return render_template("feed.html", mode=mode)
-
-
 @app.route('/logout')
 @login_required
 def logout():
@@ -189,10 +179,12 @@ def logout():
 
 
 
-@app.route('/posts')
-def view_posts():
+@app.route("/feed", methods=['GET', 'POST'])
+def feed():
+    if current_user.is_authenticated:
+        cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
+        mode=cur.fetchone()[0],
     res = cur.execute("""Select * from posts""").fetchall()
-    print(len(res))
     posts = []
     for i in range(len(res)):
         posts.append(Post(
@@ -204,12 +196,9 @@ def view_posts():
             author_id = cur.execute(f"Select username from users Where id = ({res[i][5]})").fetchall()[0][0]
 
         ))
-        print(cur.execute(f"Select username from users Where id = ({res[i][5]})").fetchall()[0][0])
-
-
     return render_template(
-        'posts_list.html',
-        mode="day",
+        'feed.html',
+        mode='day',
         posts=posts
     )
 if __name__ == "__main__":

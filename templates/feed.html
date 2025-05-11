@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Social Network</title>
+    <title>Notebook - Posts</title>
     {% if mode == "day" %}
         <link rel="stylesheet" href="static/css/day.css">
     {% elif mode == "night" %}
@@ -22,6 +22,29 @@
         <a class="action-button" href="/edit_profile">Update Personal Data</a>
         <br/>
         <a class="action-button" href="/logout">Log Out</a>
+    </div>
+
+    <div class="posts-container">
+        {% for post in posts %}
+        <div class="post-card">
+            <div class="post-header">
+                <h2 class="post-title">{{ post.title }}</h2>
+                <span class="post-meta">
+                    {{ post.creation_date.strftime('%B %d, %Y') }}
+                </span>
+            </div>
+
+            <div class="post-content">
+                {{ post.content }}
+            </div>
+
+            <div class="post-footer">
+                <span class="post-meta">
+                    Category: {{ post.category }} | Author: {{ post.author_id }}
+                </span>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </body>
 </html>
