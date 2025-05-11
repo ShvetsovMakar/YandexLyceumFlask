@@ -5,6 +5,17 @@ from datetime import datetime
 from authentication.user import User
 from database.config import cur, db
 
+
+# Модель данных поста (в реальном приложении это будет из БД)
+class Post:
+    def __init__(self, id, title, content, category, creation_date, author_id):
+        self.id = id
+        self.title = title
+        self.content = content
+        self.category = category
+        self.creation_date = creation_date
+        self.author_id = author_id
+
 # Functions
 def fetch_usernames():
     # Fetching usernames
@@ -177,5 +188,29 @@ def logout():
     return redirect("/")
 
 
+
+@app.route('/posts')
+def view_posts():
+    res = cur.execute("""Select * from posts""").fetchall()
+    print(len(res))
+    posts = []
+    for i in range(len(res)):
+        posts.append(Post(
+            id = res[i][0],
+            title = res[i][1],
+            content = res[i][2],
+            category = res[i][3],
+            creation_date = datetime.now(),
+            author_id = cur.execute(f"Select username from users Where id = ({res[i][5]})").fetchall()[0][0]
+
+        ))
+        print(cur.execute(f"Select username from users Where id = ({res[i][5]})").fetchall()[0][0])
+
+
+    return render_template(
+        'posts_list.html',
+        mode="day",
+        posts=posts
+    )
 if __name__ == "__main__":
     app.run()
