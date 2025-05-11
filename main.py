@@ -52,7 +52,7 @@ def index():
         cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
         mode = cur.fetchone()[0]
 
-        return redirect("/feed")
+        return redirect("/feed", mode=mode)
 
     return render_template("index.html", mode=mode)
 
@@ -64,7 +64,7 @@ def signup():
         cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
         mode = cur.fetchone()[0]
 
-        return redirect("/feed")
+        return redirect("/feed", mode=mode)
 
     if request.method == 'POST':
         username = request.form['username']
@@ -98,7 +98,7 @@ def login():
         cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
         mode = cur.fetchone()[0]
 
-        return redirect("/feed")
+        return redirect("/feed", mode=mode)
 
     if request.method == 'POST':
         username = request.form['username']
