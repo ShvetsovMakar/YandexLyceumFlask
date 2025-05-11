@@ -48,7 +48,7 @@ def index():
         cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
         mode = cur.fetchone()[0]
 
-
+    print(mode)
     return render_template("index.html", mode=mode)
 
 
@@ -180,9 +180,10 @@ def logout():
 
 
 
-@app.route("/feed", methods=['GET', 'POST'])
+@app.route("/feed")
+@login_required
 def feed():
-    mode='day'
+    mode="day"
     if current_user.is_authenticated:
         cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
         mode = cur.fetchone()[0],
@@ -198,10 +199,6 @@ def feed():
             author = cur.execute(f"Select username from users Where id = ({res[i][5]})").fetchall()[0][0]
 
         ))
-    return render_template(
-        'feed.html',
-        mode='day',
-        posts=posts
-    )
+    return render_template('feed.html', mode=mode[0], posts=posts)
 if __name__ == "__main__":
     app.run()
