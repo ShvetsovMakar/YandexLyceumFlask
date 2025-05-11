@@ -101,3 +101,37 @@ form {
 textarea {
   resize: none;
 }
+
+.container {
+    text-align: center;
+    padding: 40px;
+    background-color: #1e1e1e;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.button-group {
+    margin: auto;
+    display: block;
+    gap: 30px;
+    align-items: center;
+}
+
+.action-button {
+    margin: auto;
+    display: block;
+    padding: 12px 24px;
+    background-color: #3a3a3a;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 220px;
+    text-align: center;
+}
+
+.action-button:hover {
+    background-color: #575757;
+    transform: translateY(-2px);
+}

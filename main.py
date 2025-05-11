@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, make_response, redirect, url_for
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from datetime import datetime
 
 from authentication.user import User
 from database.config import cur, db
@@ -62,7 +63,7 @@ def signup():
         cur.execute(f'SELECT MAX(id) FROM users')
         user_id = cur.fetchone()[0] + 1
 
-        cur.execute(f"INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?)",
+        cur.execute(f"INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                     (user_id, username, password, '', '', '', '', 'day'))
         db.commit()
 
@@ -98,27 +99,84 @@ def login():
 
         login_user(User(user_id))
 
-        return redirect("/")
+        return redirect("/feed")
 
     return render_template("login.html", mode=mode)
 
-@app.route("/add_post")
-def add_post():
+@app.route("/create_post", methods=['GET', 'POST'])
+@login_required
+def create_post():
     mode = "day"
     if current_user.is_authenticated:
         cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
         mode = cur.fetchone()[0]
 
-    return render_template("add_post.html", mode=mode)
+    if request.method == 'POST':
+        title = request.form["title"]
+        content = request.form["content"]
+        category = request.form["category"]
+        creation_date = str(datetime.now().date())
+        author_id = current_user.id
 
-@app.route("/profile_form")
-def profile_form():
+        cur.execute(f'SELECT MAX(id) FROM posts')
+        try:
+            post_id = cur.fetchone()[0] + 1
+        except (Exception,):
+            post_id = 1
+
+        cur.execute(f"INSERT INTO posts VALUES (?, ?, ?, ?, ?, ?)",
+                    (post_id, title, content, category, creation_date, author_id))
+        db.commit()
+
+        return redirect("/feed")
+
+    return render_template("create_post.html", mode=mode)
+
+@app.route("/edit_profile", methods=['GET', 'POST'])
+@login_required
+def edit_profile():
     mode = "day"
     if current_user.is_authenticated:
         cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
         mode = cur.fetchone()[0]
 
-    return render_template("profile_form.html", mode=mode)
+    if request.method == 'POST':
+        first_name = request.form["first_name"]
+        second_name = request.form["last_name"]
+        birth_date = request.form["birth_date"]
+        about = request.form["about"]
+        new_mode = request.form["mode"]
+
+        cur.execute(f"UPDATE users SET name = \"{first_name}\", "
+                                     f"surname = \"{second_name}\","
+                                     f"birth_date = \"{birth_date}\","
+                                     f"about = \"{about}\","
+                                     f"mode = \"{new_mode}\""
+                    f"WHERE id = {current_user.id}")
+        db.commit()
+
+        return redirect("/feed")
+
+    return render_template("edit_profile.html", mode=mode)
+
+
+@app.route("/feed", methods=['GET', 'POST'])
+@login_required
+def feed():
+    mode = "day"
+    if current_user.is_authenticated:
+        cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
+        mode = cur.fetchone()[0]
+
+    return render_template("feed.html", mode=mode)
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect("/")
+
 
 if __name__ == "__main__":
     app.run()

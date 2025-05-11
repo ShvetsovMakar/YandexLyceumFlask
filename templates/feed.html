@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Social Network</title>
+    {% if mode == "day" %}
+        <link rel="stylesheet" href="static/css/day.css">
+    {% elif mode == "night" %}
+        <link rel="stylesheet" href="static/css/night.css">
+    {% endif %}
+</head>
+
+<body>
+    <div>
+        <h1>Notebook</h1>
+        <p>Social network</p>
+    </div>
+
+    <div>
+        <a class="action-button" href="/create_post">Create New Post</a>
+        <br/>
+        <a class="action-button" href="/edit_profile">Update Personal Data</a>
+        <br/>
+        <a class="action-button" href="/logout">Log Out</a>
+    </div>
+</body>
+</html>

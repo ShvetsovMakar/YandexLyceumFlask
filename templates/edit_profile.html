@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Profile</title>
+    {% if mode == "day" %}
+        <link rel="stylesheet" href="static/css/day.css">
+    {% elif mode == "night" %}
+        <link rel="stylesheet" href="static/css/night.css">
+    {% endif %}
+</head>
+
+<body>
+    <div>
+        <h1>Personal Information</h1>
+        <form action="" method="post">
+            <label for="html">First Name</label>
+            <input type="text" id="first_name" name="first_name" class="form-input" required>
+
+            <label for="html">Last Name</label>
+            <input type="text" id="last_name" name="last_name" class="form-input" required>
+
+            <label for="html">Date of Birth</label>
+            <input type="date" id="birth_date" name="birth_date" class="form-input" required>
+
+            <label for="html">About Me</label>
+            <textarea id="about" name="about" class="form-input" rows="4" required></textarea>
+
+            <label for="html">Theme Preference</label>
+            <select id="mode" name="mode" class="form-input" required>
+                <option value="day">Day Mode</option>
+                <option value="night">Night Mode</option>
+            </select><br>
+
+            <button type="submit" id="submit" class="Confirmation">Save Profile</button>
+        </form>
+    </div>
+</body>
+</html>
