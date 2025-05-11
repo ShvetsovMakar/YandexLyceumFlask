@@ -1,12 +1,11 @@
 from flask import Flask, render_template, request, make_response, redirect, url_for
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from datetime import datetime
+from datetime import datetime, date
 
 from authentication.user import User
 from database.config import cur, db
 
 
-# Модель данных поста (в реальном приложении это будет из БД)
 class Post:
     def __init__(self, id, title, content, category, creation_date, author):
         self.id = id
@@ -25,6 +24,11 @@ def fetch_usernames():
         usernames.append(i[0].lower())
 
     return usernames
+
+
+def string_to_date(string):
+    year, month, day = map(int, string.split('-'))
+    return date(year, month, day)
 
 
 app = Flask(__name__)
@@ -48,7 +52,8 @@ def index():
         cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
         mode = cur.fetchone()[0]
 
-    print(mode)
+        return redirect("/feed")
+
     return render_template("index.html", mode=mode)
 
 
@@ -58,6 +63,8 @@ def signup():
     if current_user.is_authenticated:
         cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
         mode = cur.fetchone()[0]
+
+        return redirect("/feed")
 
     if request.method == 'POST':
         username = request.form['username']
@@ -91,6 +98,8 @@ def login():
         cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
         mode = cur.fetchone()[0]
 
+        return redirect("/feed")
+
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -118,10 +127,8 @@ def login():
 @app.route("/create_post", methods=['GET', 'POST'])
 @login_required
 def create_post():
-    mode = "day"
-    if current_user.is_authenticated:
-        cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
-        mode = cur.fetchone()[0]
+    cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
+    mode = cur.fetchone()[0]
 
     if request.method == 'POST':
         title = request.form["title"]
@@ -147,20 +154,18 @@ def create_post():
 @app.route("/edit_profile", methods=['GET', 'POST'])
 @login_required
 def edit_profile():
-    mode = "day"
-    if current_user.is_authenticated:
-        cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
-        mode = cur.fetchone()[0]
+    cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
+    mode = cur.fetchone()[0]
 
     if request.method == 'POST':
-        first_name = request.form["first_name"]
-        second_name = request.form["last_name"]
+        name = request.form["name"]
+        surname = request.form["surname"]
         birth_date = request.form["birth_date"]
         about = request.form["about"]
         new_mode = request.form["mode"]
 
-        cur.execute(f"UPDATE users SET name = \"{first_name}\", "
-                                     f"surname = \"{second_name}\","
+        cur.execute(f"UPDATE users SET name = \"{name}\", "
+                                     f"surname = \"{surname}\","
                                      f"birth_date = \"{birth_date}\","
                                      f"about = \"{about}\","
                                      f"mode = \"{new_mode}\""
@@ -179,14 +184,13 @@ def logout():
     return redirect("/")
 
 
-
-@app.route("/feed")
-@login_required
+@app.route("/feed", methods=['GET', 'POST'])
 def feed():
-    mode="day"
+    mode = 'day'
     if current_user.is_authenticated:
         cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
-        mode = cur.fetchone()[0],
+        mode = cur.fetchone()[0]
+
     res = cur.execute("""Select * from posts""").fetchall()
     posts = []
     for i in range(len(res)):
@@ -195,10 +199,37 @@ def feed():
             title = res[i][1],
             content = res[i][2],
             category = res[i][3],
-            creation_date = res[i][4],
+            creation_date = string_to_date(res[i][4]),
             author = cur.execute(f"Select username from users Where id = ({res[i][5]})").fetchall()[0][0]
 
         ))
-    return render_template('feed.html', mode=mode[0], posts=posts)
+    return render_template(
+        'feed.html',
+        mode=mode,
+        posts=posts
+    )
+
+@app.route("/user/<username>", methods=['GET', 'POST'])
+def user_info(username):
+    mode = "day"
+    if current_user.is_authenticated:
+        cur.execute(f"SELECT mode FROM users WHERE id = {current_user.id}")
+        mode = cur.fetchone()[0]
+
+    usernames = fetch_usernames()
+    if username not in usernames:
+        return render_template("invalid_user.html", mode=mode)
+
+    cur.execute(f"SELECT name, surname, birth_date, about FROM users WHERE username = \"{username}\"")
+    info = cur.fetchone()
+    name = info[0]
+    surname = info[1]
+    birth_date = info[2]
+    about = info[3]
+
+    return render_template("user_info.html", mode=mode, usename=username, name=name, surname=surname,
+                           birth_date=birth_date, about=about)
+
+
 if __name__ == "__main__":
     app.run()

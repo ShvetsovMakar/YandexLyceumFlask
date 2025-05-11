@@ -1,11 +1,22 @@
 body {
-  background-color: #D4D4D4;
+    background-color: #ffffff;
+    color: #000000;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+div {
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    max-width: 600px;
+    margin: auto;
 }
 
 h1 {
-  color: #2B2B2B;
-  text-align: center;
-  font-size: 50px;
+    text-align: center;
+    color: #333333;
 }
 
 p {
@@ -172,4 +183,18 @@ textarea {
     margin-top: 15px;
     border-top: 1px solid #eee;
     padding-top: 15px;
+}
+
+.feed-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.feed-button:hover {
+    background-color: #45a049;
 }

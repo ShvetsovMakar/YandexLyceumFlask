@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Not Found</title>
+    {% if mode == "day" %}
+        <link rel="stylesheet" href="../static/css/day.css">
+    {% elif mode == "night" %}
+        <link rel="stylesheet" href="../static/css/night.css">
+    {% endif %}
+</head>
+
+<body>
+    <div>
+        <h1>User Not Found</h1>
+        <p>Sorry, there is no user with the username <strong>{{ username }}</strong>.</p>
+    </div>
+
+    <div>
+        <a class="feed-button" href="/feed">Go to Feed</a>
+    </div>
+</body>
+</html>

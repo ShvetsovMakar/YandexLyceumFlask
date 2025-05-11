@@ -2,13 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Notebook - My Posts</title>
+    <title>Notebook - Posts</title>
     {% if mode == "day" %}
         <link rel="stylesheet" href="static/css/day.css">
     {% elif mode == "night" %}
         <link rel="stylesheet" href="static/css/night.css">
     {% endif %}
-
 </head>
 
 <body>
@@ -31,7 +30,7 @@
             <div class="post-header">
                 <h2 class="post-title">{{ post.title }}</h2>
                 <span class="post-meta">
-                    {{ post.creation_date }}
+                    {{ post.creation_date.strftime('%B %d, %Y') }}
                 </span>
             </div>
 
@@ -41,7 +40,7 @@
 
             <div class="post-footer">
                 <span class="post-meta">
-                    Category: {{ post.category }} |
+                     Category: {{ post.category }} |
                     Author: <a class="user-link" href="/user/{{ post.author }}">{{ post.author }}</a>
                 </span>
             </div>
