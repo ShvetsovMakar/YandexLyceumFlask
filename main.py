@@ -7,13 +7,14 @@ from database.config import cur, db
 
 
 class Post:
-    def __init__(self, id, title, content, category, creation_date, author):
-        self.id = id
+    def __init__(self, post_id, title, content, category, creation_date, author):
+        self.id = post_id
         self.title = title
         self.content = content
         self.category = category
         self.creation_date = creation_date
         self.author = author
+
 
 # Functions
 def fetch_usernames():
@@ -118,6 +119,7 @@ def login():
 
     return render_template("login.html", mode=mode)
 
+
 @app.route("/create_post", methods=['GET', 'POST'])
 @login_required
 def create_post():
@@ -144,6 +146,7 @@ def create_post():
         return redirect("/feed")
 
     return render_template("create_post.html", mode=mode)
+
 
 @app.route("/edit_profile", methods=['GET', 'POST'])
 @login_required
@@ -190,18 +193,20 @@ def feed():
     for i in range(len(res)):
         posts.append(
             Post(
-                id=res[i][0],
+                post_id=res[i][0],
                 title=res[i][1],
                 content=res[i][2],
                 category=res[i][3],
                 creation_date=string_to_date(res[i][4]),
-                author=cur.execute(f"SELECT username FROM users WHERE id = ({res[i][5]})").fetchall()[0][0])
+                author=cur.execute(f"SELECT username FROM users WHERE id = ({res[i][5]})").fetchall()[0][0]
+            )
         )
     return render_template(
         'feed.html',
         mode=mode,
         posts=posts
     )
+
 
 @app.route("/user/<username>", methods=['GET', 'POST'])
 def user_info(username):
@@ -234,9 +239,11 @@ def invalid_user():
 
     return render_template("invalid_user.html", mode=mode)
 
+
 @app.errorhandler(401)
 def unauthorized_callback(e):
     return render_template("login_required.html", mode="day")
+
 
 @app.errorhandler(404)
 def page_not_found(e):
