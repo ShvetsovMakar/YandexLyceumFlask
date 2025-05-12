@@ -66,45 +66,49 @@ p {
 }
 
 form {
-  border-radius: 20px;
-  margin: auto;
-  display: block;
-  width: 700px;
-  height: 500px;
-
-  text-align: center;
-  color: #707070;
-  font-size: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.Confirmation {
-  background-color: white;
-  color: black;
-  border: 5px solid #04AA6D;
-  padding: 15px 100px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  transition-duration: 0.3s;
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.Confirmation:hover {
-  background-color: #04AA6D;
-  color: white;
+label {
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: #333333;
 }
 
 .form-input {
-  text-color: black
-  border-radius: 10px;
-  margin: auto;
-  display: block;
-  width: 200px;
+    border: 1px solid #cccccc;
+    border-radius: 10px;
+    padding: 10px 15px;
+    width: 100%;
+    max-width: 250px;
+    font-size: 16px;
+    text-align: center;
+    color: #000000;
+}
 
+.Confirmation {
+    background-color: white;
+    color: black;
+    border: 2px solid #04AA6D;
+    border-radius: 5px;
+    padding: 12px 30px;
+    margin-top: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 
-  text-align: center;
-  color: #000000;
-  font-size: 25px;
+.Confirmation:hover {
+    background-color: #04AA6D;
+    color: white;
 }
 
 textarea {
