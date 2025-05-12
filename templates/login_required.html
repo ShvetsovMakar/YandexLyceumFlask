@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vacabook</title>
+    {% if mode == "day" %}
+        <link rel="stylesheet" href="../static/css/day.css">
+    {% elif mode == "night" %}
+        <link rel="stylesheet" href="../static/css/night.css">
+    {% endif %}
+</head>
+
+<body>
+    <div>
+        <h1>Login Required</h1>
+        <p>To visit this page, you need to log in.</p>
+    </div>
+
+    <div>
+        <a class="feed-button" href="/login">Log In</a>
+        <a class="feed-button" href="/sign_up">Sign Up</a>
+    </div>
+</body>
+</html>

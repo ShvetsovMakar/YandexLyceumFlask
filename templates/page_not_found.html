@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vacabook</title>
+    {% if mode == "day" %}
+        <link rel="stylesheet" href="../static/css/day.css">
+    {% elif mode == "night" %}
+        <link rel="stylesheet" href="../static/css/night.css">
+    {% endif %}
+</head>
+
+<body>
+    <div>
+        <h1>Page Not Found</h1>
+        <p>There is no such page</p>
+    </div>
+
+    <div>
+        <a class="feed-button" href="/">Go to Main Page</a>
+    </div>
+</body>
+</html>
